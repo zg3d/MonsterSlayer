@@ -5,6 +5,7 @@ new Vue({
     data: {
         slayerHealth: 100,
         monsterHealth: 100,
+        monsterSpecial: true,
         gameIsOn: false,
         turns: [],
     },
@@ -13,10 +14,10 @@ new Vue({
             this.gameIsOn = true;
             this.slayerHealth = 100;
             this.monsterHealth = 100;
-            this.turns=[];
+            this.turns = [];
         },
         attack: function () {
-            var min = 3;
+            var min = 2;
             var max = 10;
             var damage = this.damage(min, max);
             this.monsterHealth -= damage;
@@ -28,9 +29,9 @@ new Vue({
 
         },
         spAttack: function () {
-            var min = 3;
-            var max = 10;
-            var damage = Math.floor(this.damage(min, max) * 1.8);
+            var min = 5;
+            var max = 13;
+            var damage = Math.floor(this.damage(min, max) * 1.9);
             this.monsterHealth -= damage;
             this.turns.unshift({
                 isPlayer: true,
@@ -39,7 +40,7 @@ new Vue({
             this.monsterAttack();
         },
         heal: function () {
-            var healed = Math.floor((100 - this.slayerHealth) * 0.2);;
+            var healed = Math.floor((100 - this.slayerHealth) * 0.3);;
             this.slayerHealth += healed;
             this.turns.unshift({
                 isPlayer: true,
@@ -53,15 +54,30 @@ new Vue({
             this.gameIsOn = false;
         },
         monsterAttack: function () {
-            var min = 5;
-            var max = 12;
-            var damage = this.damage(min, max);
-            this.slayerHealth -= damage;
-            this.turns.unshift({
-                isPlayer: false,
-                text: `The monster dealt ${damage} damage to you.`
-            })
-            this.checkWin()
+            if (this.monsterHealth > 50 || this.monsterSpecial == false) {
+                var min = 1;
+                var max = 24;
+                var damage = this.damage(min, max);
+                this.slayerHealth -= damage;
+                this.turns.unshift({
+                    isPlayer: false,
+                    text: `The monster dealt ${damage} damage to you.`
+                })
+                this.checkWin()
+            }
+            else{
+                this.monsterSpecial = false
+                var min = 10;
+                var max = 26;
+                var damage = this.damage(min, max);
+                this.slayerHealth -= damage;
+                this.monsterHealth += 20;
+                this.turns.unshift({
+                    isPlayer: false,
+                    text: `The monster used its special, it dealt ${damage} damage to you and healed for 15`
+                })
+                this.checkWin()
+            }
         }
         ,
         damage: function (min, max) {

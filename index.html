@@ -47,7 +47,7 @@
         <section class="row controls" v-show="gameIsOn">
             <div class="small-12 columns">
                 <button id="attack" @click="attack">ATTACK</button>
-                <button id="special-attack"  @click="spAttack">SPECIAL ATTACK</button>
+                <button id="special-attack" v-if="slayerHealth <= 50"  @click="spAttack">SPECIAL ATTACK</button>
                 <button id="heal"  @click="heal">HEAL</button>
                 <button id="give-up" @click="giveUp">GIVE UP</button>
             </div>

@@ -15,6 +15,7 @@ new Vue({
             this.slayerHealth = 100;
             this.monsterHealth = 100;
             this.turns = [];
+            this.monsterSpecial= true;
         },
         attack: function () {
             var min = 2;

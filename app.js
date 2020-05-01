@@ -85,8 +85,18 @@ new Vue({
             return Math.floor(Math.random() * (max - min + 1)) + min;
         },
         checkWin: function () {
+            if(this.monsterHealth <=0 && this.slayerHealth <=0)
+            {
+                if (confirm('You both Died! Shame maybe next time. New Game?')) {
+                    this.startGame();
+                }
+                else {
+                    this.gameIsOn = false;
+                    return true;
+                }
+            }
             if (this.monsterHealth <= 0) {
-                this.monsterHealth = 0;
+                //this.monsterHealth = 0;
                 if (confirm('You Won! New Game?')) {
                     this.startGame();
                 }
@@ -97,7 +107,7 @@ new Vue({
 
             }
             if (this.slayerHealth <= 0) {
-                this.slayerHealth = 0;
+               // this.slayerHealth = 0;
                 if (confirm('You Lose! New Game?')) {
                     this.startGame();
                 }
